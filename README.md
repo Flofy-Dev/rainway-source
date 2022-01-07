@@ -53,7 +53,7 @@ Check out the Laravel 8 documentation for more info. https://laravel.com/docs/8.
 
 ## Meta
 
-Flofy – [YourYoutube](https://www.youtube.com/channel/UCbkjKnxMaS9PKfGdw4lTJoA)
+Flofy – [Youtube](https://www.youtube.com/channel/UCbkjKnxMaS9PKfGdw4lTJoA)
       - Discord: Flofy#3208
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
@@ -66,6 +66,10 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+## More info
+You can join the official Discord here! https://discord.com/invite/B7KsMcEY4A
+The website of Rainway is https://rainway.xyz. You can check it out here!
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
