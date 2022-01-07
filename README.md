@@ -70,7 +70,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## More info
 You can join the official Discord here! https://discord.com/invite/B7KsMcEY4A <br>
-The website of Rainway is https://rainway.xyz. You can check it out here!
+The website of Rainway is https://rainway.xyz. You can check it out there!
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
