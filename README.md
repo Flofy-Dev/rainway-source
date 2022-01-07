@@ -69,7 +69,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 5. Create a new Pull Request
 
 ## More info
-You can join the official Discord here! https://discord.com/invite/B7KsMcEY4A
+You can join the official Discord here! https://discord.com/invite/B7KsMcEY4A <br>
 The website of Rainway is https://rainway.xyz. You can check it out here!
 
 <!-- Markdown link & img dfn's -->
