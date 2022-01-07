@@ -3,7 +3,7 @@
 
 [![Build Status][travis-image]][travis-url]
 
-One to two paragraph statement about your product and what it does.
+Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox.
 
 ![](header.png)
 
