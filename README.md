@@ -54,10 +54,11 @@ Check out the Laravel 8 documentation for more info. https://laravel.com/docs/8.
 ## Meta
 
 Flofy – [Youtube](https://www.youtube.com/channel/UCbkjKnxMaS9PKfGdw4lTJoA) <br>
-      - Discord: Flofy#3208
-Distributed under the MIT license. See ``LICENSE`` for more information.
+      - Discord: Flofy#3208 <br>
 
-[My GitHub profile](https://github.com/Flofy-Dev/)
+[My GitHub profile](https://github.com/Flofy-Dev/) <br>
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Contributing
 
