@@ -3,9 +3,9 @@
 
 [![Build Status][travis-image]][travis-url]
 
-Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox, allowing you to deploy servers of your own on a secure code foundation.
-
 ![](header.png)
+
+Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox, allowing you to deploy servers of your own on a secure code foundation.
 
 ## Installation
 
