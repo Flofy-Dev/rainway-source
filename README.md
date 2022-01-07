@@ -57,7 +57,7 @@ Flofy – [Youtube](https://www.youtube.com/channel/UCbkjKnxMaS9PKfGdw4lTJoA)
       - Discord: Flofy#3208
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/Flofy-Dev/)
+[My GitHub profile](https://github.com/Flofy-Dev/)
 
 ## Contributing
 
