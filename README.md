@@ -7,26 +7,35 @@
 
 Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox, allowing you to deploy servers of your own on a secure code foundation.
 
+## Dependencies
+* PHP
+* Composer
+* Laravel
+* Node.js and the NPM package manager
+
 ## Installation
 
 ```sh
-npm install my-crazy-module --save
+git clone https://github.com/Flofy-Dev/rainway-source
 ```
 
-## Usage example
-
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
-
-_For more examples and usage, please refer to the [Wiki][wiki]._
-
-## Development setup
-
-Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+Create a .env file with your details (app name, url, database details etc.). The ".env.example" file is an example of the enviroment structure.
+Then, run these commands to compile the code and add the database tables.
 
 ```sh
-make install
-npm test
+composer update
+npm install && npm update
+npm run prod
+php artisan migrate
 ```
+
+You have now succesfully compiled the Rainway code!
+
+## Usage
+If you want to directly deploy the server with Laravel, you can use ```sh php artisan server ```.
+Alternatively, you can use any webserver you want! (Apache, Nginx etc.).
+You can use any database driver you want, just configure it in the .env file. For example, the Rainway source should work with MySQL, SQLite, PostgreSQL and more.
+Check out the Laravel 8 documentation for more info. https://laravel.com/docs/8.x/
 
 ## Release History
 
@@ -44,11 +53,11 @@ npm test
 
 ## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
-
+Flofy – [YourYoutube](https://www.youtube.com/channel/UCbkjKnxMaS9PKfGdw4lTJoA)
+      - Discord: Flofy#3208
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/yourname/github-link](https://github.com/Flofy-Dev/)
 
 ## Contributing
 
