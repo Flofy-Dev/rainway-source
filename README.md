@@ -3,22 +3,14 @@
 
 [![Build Status][travis-image]][travis-url]
 
-Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox.
+Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox, allowing you to deploy servers of your own on a secure code foundation.
 
 ![](header.png)
 
 ## Installation
 
-OS X & Linux:
-
 ```sh
 npm install my-crazy-module --save
-```
-
-Windows:
-
-```sh
-edit autoexec.bat
 ```
 
 ## Usage example
