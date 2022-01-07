@@ -30,14 +30,14 @@ npm test
 
 ## Release History
 
-* 1.2.0
+* 1.3.0
     * Added the forum.
     
 * 1.2.0
     * Added the admin panel.
 
 * 1.1.0
-    * Added the launcher, client, and public test game.
+    * Added the launcher, client, users page and public test game.
   
 * 1.0.0
     * Working login system
