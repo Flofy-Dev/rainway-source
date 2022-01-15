@@ -1,0 +1,4 @@
+RewriteCond %{HTTP_HOST} ^yourdomain.example$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.yourdomain.example$
+RewriteCond %{REQUEST_URI} !/public/
+RewriteRule (.*) /public/$1 [L]
