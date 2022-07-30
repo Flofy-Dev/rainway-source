@@ -1,0 +1,2 @@
+<img src="https://rainway.xyz/images/logo.png?712d6d4a7c76d9b170c72d65f547d00c"></img> <br>
+<p> This is the source of Rainway, an open source old Roblox revival, licensed under the GNU GPL v3.0 License. <br> Made with the Laravel framework. -Flofy </p>

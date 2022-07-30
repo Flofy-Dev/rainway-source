@@ -1,0 +1,4 @@
+RewriteCond %{HTTP_HOST} ^rainway.xyz$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.rainway.xyz$
+RewriteCond %{REQUEST_URI} !/public/
+RewriteRule (.*) /public/$1 [L]
