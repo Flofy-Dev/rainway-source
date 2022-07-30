@@ -2,8 +2,7 @@
 > The source of Rainway, an open source old Roblox Revival!
 [![Build Status][travis-image]][travis-url]
 
-![](header.png)
-<img>https://cdn.discordapp.com/attachments/880094486175289424/1002999219868676116/download.png<img>
+![]([header.png](https://cdn.discordapp.com/attachments/880094486175289424/1002999219868676116/download.png))
 
 Rainway is a project meant to give people the possibility to play legacy versions of the game Roblox, allowing you to deploy servers of your own on a secure code foundation.
 
