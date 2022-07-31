@@ -39,6 +39,9 @@ Check out the Laravel 9 documentation for more info. https://laravel.com/docs/9.
 
 ## Release History
 
+* 1.4.0
+    * Migrated the codebase to Laravel 9 from Laravel 8.
+    
 * 1.3.0
     * Added the forum.
     
