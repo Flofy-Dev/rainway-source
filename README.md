@@ -35,7 +35,7 @@ You have now succesfully compiled the Rainway code!
 If you want to directly deploy the server with Laravel, you can use ```php artisan serve```. <br>
 Alternatively, you can use any webserver you want! (Apache, Nginx etc.). <br>
 You can use any database driver you want, just configure it in the .env file. For example, the Rainway source should work with MySQL, SQLite, PostgreSQL and more. <br>
-Check out the Laravel 8 documentation for more info. https://laravel.com/docs/8.x/
+Check out the Laravel 9 documentation for more info. https://laravel.com/docs/9.x/
 
 ## Release History
 
