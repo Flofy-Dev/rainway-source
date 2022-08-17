@@ -13,7 +13,19 @@
             {{ __('Settings') }}
         </h2>
     </x-slot>
+    
+    <?php 
+        $itemerror = false;
+        if(isset($_GET["error"]))
+            $itemerror = $_GET["error"];
+        ?>
 
+    @if($itemerror)
+    <div style="margin-top:10px;" class="alert alert-danger" role="alert">
+        The blurb is too long!
+    </div>
+    @endif
+    
     <form action="/changeblurb" method="POST">
     {{ csrf_field() }}
     <div class="col d-flex justify-content-center" style="padding:10px;">
