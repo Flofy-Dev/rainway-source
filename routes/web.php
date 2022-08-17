@@ -324,11 +324,16 @@ Route::any('/redraw', function () {
 Route::post('/changeblurb', function () {
     $blurb = $_POST['blurb'];
     $userid = Auth::user()->id;
-    DB::table('users')
+    $url = env('APP_URL')."/profile?id=".$userid;
+    if(strlen($blurb) <= 255)
+    {
+        DB::table('users')
         ->where('id', $userid)
         ->update(['blurb' => $blurb]);
-
-    $url = env('APP_URL')."/profile?id=".$userid;
+    }
+    else
+        $url = env('APP_URL')."/settings?error=true";
+    
     header("Location: $url");
     exit;
 })->middleware(['auth', 'verified'])->name('changeblurb');
@@ -446,7 +451,7 @@ Route::post('/wearitem', function () {
                 ->update(['wearing' => 1]);
         }
         else
-        $url = "/avatar?page=$page&error=true";
+            $url = "/avatar?page=$page&error=true";
     }
     else
     {
