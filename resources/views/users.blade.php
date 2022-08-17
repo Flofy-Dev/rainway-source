@@ -8,7 +8,7 @@
 </html>
 
 <?php
-$users = DB::table('users')->where('status', 1)->whereNotNull('email_verified_at')->orderBy('id')->simplePaginate(5);
+$users = DB::table('users')->where('status', 1)->whereNotNull('email_verified_at')->orderBy('id')->paginate(10);
 $user_count = DB::table('users')->where('status', 1)->whereNotNull('email_verified_at')->count();
 $sessionvalue = session('searched');
 
@@ -48,25 +48,25 @@ if( $sessionvalue == 'true' )
             </div>
         </form>
     </div>
-    
+
     @if (!empty($users))
     <div class="container mt-5">
         <table class="table table-bordered mb-5">
             <thead>
-                <tr class="table-primary">
-                    <th scope="col">ID</th>
-                    <th scope="col">Username</th>
-                </tr>
-            </thead>
-            <tbody>
-            
                 @foreach($users as $data)
-                <tr>
-                    <th scope="row">{{ $data->id }}</th>
-                    <td>{{ $data->name }}</td>
+                <tr class="table-primary">
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all;">
+                            <div class="col-6"> <a href="/profile?id={{ $data->id }}"> <img width="100" height="100" src="{{ $data->avatar }}"></img> </a> </div>
+                    
+                            <div class="col-6 border-left"> 
+                                <a class="font-weight-bold" href="/profile?id={{ $data->id }}">{{ $data->name }}</a>
+                                <p class="font-weight-normal">{{ $data->blurb }}</p>
+                            </div>
+                    </div>
+                </tr>
                 @endforeach
             
-            </tbody>
+            </thead>
         </table>
 
         {{-- Pagination --}}
@@ -86,7 +86,7 @@ if( $sessionvalue == 'true' )
     </div>
     @endif
     
-    <div class="py-12">
+    <div class="py-12" style="margin-bottom:25px;">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">

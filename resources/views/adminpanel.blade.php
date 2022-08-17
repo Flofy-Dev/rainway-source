@@ -69,7 +69,7 @@ if( $sessionvalue == 'true' )
                     <th scope="row">{{ $data->id }}</th>
                     <td>
                     <div class="form-inline">
-                    <div class="form-group">{{ $data->name }}</div>
+                    <div class="form-group"><a href="/profile?id={{ $data->id }}">{{ $data->name }}</a></div>
                     @if ($data->status == 1 && $data->name != $name && $data->id != 1)
                         <form class="form-group" action="/banuser" method="POST">
                             {{ csrf_field() }}

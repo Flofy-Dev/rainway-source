@@ -1,5 +1,39 @@
+<?php
+$time = time();
+$dbtime = Auth::user()->timestamp;
+$userid = Auth::user()->id;
+$rainbux = Auth::user()->rainbux;
+if($time > $dbtime)
+{
+    $rainbux = $rainbux + 25;
+    DB::table('users')
+        ->where('id', $userid)
+        ->update(['timestamp' => $time + 86400]);
+
+    DB::table('users')
+        ->where('id', $userid)
+        ->update(['rainbux' => $rainbux]);
+}
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<style>
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 20px; /* Set the fixed height of the footer here */
+  line-height: 40px; /* Vertically center the text there */
+}
+</style>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,17 +57,26 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
             <!-- Page Content -->
             <main>
                 {{ $slot }}
             </main>
+            
+            <?php
+                $isroute = request()->routeIs('profile');
+            ?>
+            @if($isroute == false)
+            <footer class="footer bg-white">
+                <div class="container">
+                    <p class="font-weight-bold text-muted">@Copyright 2021-2022 Rainway Team</p>
+                    <div class="row text-muted">
+                    <p class="text-muted">We are not affiliated with ROBLOX Corporation. | <a href="https://discord.gg/B7KsMcEY4A"> Discord </a> 
+                     | <a href="https://github.com/Flofy-Dev/rainway-source/tree/main"> Github </a>
+                    </p>
+                    </div>
+                </div>
+            </footer>
+            @endif
         </div>
     </body>
 </html>

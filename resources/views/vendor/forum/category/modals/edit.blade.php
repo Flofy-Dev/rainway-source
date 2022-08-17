@@ -12,13 +12,6 @@
         <label for="description">{{ trans('forum::general.description') }}</label>
         <input type="text" name="description" value="{{ old('description') ?? $category->description }}" class="form-control">
     </div>
-    <div class="mb-3">
-        <div class="form-check">
-            <input type="hidden" name="is_private" value="0" />
-            <input class="form-check-input" type="checkbox" name="is_private" id="is-private" value="1" {{ $category->is_private ? 'checked' : '' }} {{ $privateAncestor != null ? 'disabled' : '' }}>
-            <label class="form-check-label" for="is-private">{{ trans('forum::categories.make_private') }}</label>
-        </div>
-    </div>
     @if ($privateAncestor != null)
         <div class="alert alert-primary" role="alert">
             {!! trans('forum::categories.access_controlled_by_private_ancestor', ['category' => "<a href=\"{$privateAncestor->route}\">{$privateAncestor->title}</a>"]) !!}

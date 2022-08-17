@@ -26,7 +26,7 @@
     <div class="col d-flex justify-content-center">
     <div class="card">
         <div class="card-body">
-            <a href="/downloadfile" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Download</a>
+            <a href="/downloadfile" class="btn btn-primary btn-lg active disabled" role="button" aria-pressed="true">Download</a>
             <a href="https://www.virustotal.com/gui/file/0719ac33340b5c5ce633d06a3633c4e8c15623948b500737aa29ea53847cff52?nocache=1" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">VirusTotal Scan</a>
         </div>
     </div>

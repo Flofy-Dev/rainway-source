@@ -1,6 +1,6 @@
 {{-- $thread is passed as NULL to the master layout view to prevent it from showing in the breadcrumbs --}}
 @extends('forum::master', ['thread' => null])
-
+<?php $adminstatus = Auth::user()->admin; ?> 
 @section('content')
     <div class="d-flex flex-row justify-content-between mb-2">
         <h2 style="color: {{ $category->color }};">
@@ -13,10 +13,17 @@
 
     <div class="v-category-show">
         <div class="clearfix">
+            
             @if ($category->accepts_threads)
-                @can ('createThreads', $category)
-                    <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary float-end">{{ trans('forum::threads.new_thread') }}</a>
-                @endcan
+                @if($category->title == "Announcements")
+                    @if($adminstatus == 1)
+                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary float-end">{{ trans('forum::threads.new_thread') }}</a>
+                    @endif
+                @else
+                    @can ('createThreads', $category)
+                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary float-end">{{ trans('forum::threads.new_thread') }}</a>
+                    @endcan
+                @endif
             @endif
 
             <div class="btn-group" role="group">
@@ -139,9 +146,15 @@
                 </div>
                 <div class="col col-xs-4 text-end">
                     @if ($category->accepts_threads)
-                        @can ('createThreads', $category)
-                            <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary">{{ trans('forum::threads.new_thread') }}</a>
-                        @endcan
+                        @if($category->title == "Announcements")
+                            @if($adminstatus == 1)
+                                <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary float-end">{{ trans('forum::threads.new_thread') }}</a>
+                            @endif
+                        @else
+                            @can ('createThreads', $category)
+                                <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary float-end">{{ trans('forum::threads.new_thread') }}</a>
+                            @endcan
+                        @endif
                     @endif
                 </div>
             </div>

@@ -51,11 +51,16 @@
                         </x-nav-link>
                     </div>
                 @endif
-                
             </div>
-            
+
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div style="position: relative; right: 20px;">
+                    <x-moneyicon></x-moneyicon>
+                </div>
+                <div style="position: relative; right: 16px;">
+                    <a>{{ Auth::user()->rainbux }}</a>
+                </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -70,6 +75,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('settings')">
+                            {{ __('Settings') }}
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -88,6 +97,8 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
+            
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -149,6 +160,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('settings')">
+                    {{ __('Settings') }}
+                </x-responsive-nav-link>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -168,5 +182,31 @@
         </div>
     </div>
 </nav>
+
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 py-0 py-md-0">
+    <!-- Primary Navigation Menu -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+            <div class="flex-shrink-0 flex items-center">
+                    <x-nav-link :href="route('shop')" :active="request()->routeIs('shop')">
+                        Shop
+                    </x-nav-link>
+                </div>
+                <div class="flex-shrink-0 flex items-center">
+                    <x-nav-link style="position:relative; left:7px;" :href="route('avatar')" :active="request()->routeIs('avatar')">
+                        Avatar
+                    </x-nav-link>
+                </div>
+                <div class="flex-shrink-0 flex items-center">
+                    <x-nav-link style="position:relative; left:14px;" href="/public/profile?id={{ Auth::user()->id }}" :active="request()->routeIs('profile')">
+                        Profile
+                    </x-nav-link>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
 </head>
 </html>
