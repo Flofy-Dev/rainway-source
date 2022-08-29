@@ -123,6 +123,11 @@
                     ?>
 
                         @if (!empty($items))
+                        
+                        {{-- Pagination --}}
+                        <div class="d-flex justify-content-center" style="margin-top:25px;">
+                            {!! $items->onEachSide(2)->links() !!}
+                        </div>
                         <div class="container">
                         <div class="mt-3">
                             @foreach($items as $data)
@@ -158,10 +163,6 @@
                             @endforeach
                             </div>
                         </div>
-                            {{-- Pagination --}}
-                            <div class="d-flex justify-content-center" style="margin-top:25px;">
-                                {!! $items->onEachSide(2)->links() !!}
-                            </div>
                         </div>
                         @else
                             <div class="py-12">

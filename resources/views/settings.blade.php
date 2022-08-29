@@ -22,7 +22,7 @@
 
     @if($itemerror)
     <div style="margin-top:10px;" class="alert alert-danger" role="alert">
-        The blurb is too long!
+        Invalid blurb!
     </div>
     @endif
     

@@ -1,3 +1,4 @@
+@if (Auth::check())
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
     <title>
         {{ config('app.name'); }} - Forum
     </title>
-
+    
     <!-- Bootstrap (https://github.com/twbs/bootstrap) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -367,3 +368,9 @@
     </x-forumapp>
 </body>
 </html>
+@else
+    <?php 
+    header("Location: /");
+    exit; 
+    ?>
+@endif

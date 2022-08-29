@@ -8,22 +8,34 @@ class ForumPolicy
 {
     public function createCategories($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 
     public function manageCategories($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 
     public function moveCategories($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 
     public function renameCategories($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 
     public function markThreadsAsRead($user): bool
@@ -33,11 +45,17 @@ class ForumPolicy
 
     public function viewTrashedThreads($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 
     public function viewTrashedPosts($user): bool
     {
-        return Auth::user()->admin === 1;
+        if(isset(Auth::user()->admin))
+            return Auth::user()->admin === 1;
+        else
+            return false;
     }
 }

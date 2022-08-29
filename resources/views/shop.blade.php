@@ -40,7 +40,7 @@
                     </button>
                 </div>
 
-                <form action="/createitem" method="POST">
+                <form action="/createitem" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <!-- Modal -->
                 <div class="modal fade" id="item" tabindex="-1" aria-labelledby="item" aria-hidden="true">
@@ -59,7 +59,7 @@
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Description</span>
-                                <input required="true" type="text" name="desc" id="desc" class="form-control" placeholder="" aria-label="desc" aria-describedby="basic-addon1">
+                                <textarea required="true" type="text" name="desc" id="desc" class="form-control" placeholder="" aria-label="desc" aria-describedby="basic-addon1" rows="3"></textarea>
                             </div>
 
                             <div class="input-group mb-3">
@@ -71,18 +71,71 @@
                                 <span class="input-group-text" id="basic-addon1">Roblox Asset ID</span>
                                 <input required="true" type="number" name="id" id="id" class="form-control" placeholder="" aria-label="id" aria-describedby="basic-addon1">
                             </div>
+                            
+                            <style>
+                            fieldset {
+                              display: none;
+                            }
 
+                            .show_fieldset {
+                              display: inline;
+                            }
+                            </style>
+                            
+                            <script>
+                            function showFieldset(fieldsetToShow) {
+                              if(fieldsetToShow == "hat")
+                                fieldsetToHide = "imageitems";
+                              else
+                              {
+                                fieldsetToHide = "hat";
+                                fieldsetToShow = "imageitems";
+                              }
+                              fieldsetToShow = document.getElementById(fieldsetToShow);
+                              fieldsetToHide = document.getElementById(fieldsetToHide);
+                              
+                              var userInput = fieldsetToShow.querySelector("input");
+                              fieldsetToShow.classList.add("show_fieldset");
+                              fieldsetToHide.classList.remove("show_fieldset");
+
+                              setTimeout(function () {
+                                userInput.focus();
+                              }, 500);
+                            }
+                            </script>
+                            
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">Type</span>
-                                <select required="true" name="type" id="type" class="form-control" placeholder="" aria-label="type" aria-describedby="basic-addon1">
+                                <select value="hat" onchange="showFieldset(value)" required="true" name="type" id="type" class="form-control" placeholder="" aria-label="type" aria-describedby="basic-addon1">
                                     <option value="hat">Hat</option>
                                     <option value="face">Face</option>
-                                    <option value="gear">Gear</option>
                                     <option value="shirt">Shirt</option>
                                     <option value="t-shirt">T-Shirt</option>
                                     <option value="pants">Pants</option>
                                 </select>
                             </div>
+                            
+                            <fieldset class="" id="imageitems">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Upload image of item (.png only)</span>
+                                    <input style="margin-top:10px;" type="file" name="item_png" id="item_png">
+                                </div>
+                            </fieldset>
+                            
+                            <fieldset class="show_fieldset" id="hat">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Upload .rbxm file of the item</span>
+                                    <input style="margin-top:10px;" type="file" name="rbxm" id="rbxm">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Upload .mesh of the item</span>
+                                    <input style="margin-top:10px;" type="file" name="mesh" id="mesh">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Upload texture of item (.png only)</span>
+                                    <input style="margin-top:10px;" type="file" name="texture" id="texture">
+                                </div>
+                            </fieldset>
                         </div>
 
                         <div class="modal-footer">

@@ -4,7 +4,7 @@ $adminstatus = Auth::user()->admin;
 
 if( $adminstatus == 1 ){ 
     
-$users = DB::table('users')->orderBy('id')->simplePaginate(5);
+$users = DB::table('users')->orderBy('id')->paginate(10);
 $sessionvalue = session('adminsearched');
 
 if( $sessionvalue == 'true' )
@@ -41,8 +41,7 @@ if( $sessionvalue == 'true' )
     </div>
     
     <div class="container">
-        <form action="/adminsearch" method="POST" role="search">
-            {{ csrf_field() }}
+        <form action="/adminsearch" method="GET" role="search">
             <div class="input-group">
                 <input type="text" class="form-control" name="q"
                     placeholder="Username"> <span class="input-group-btn">
@@ -70,7 +69,7 @@ if( $sessionvalue == 'true' )
                     <td>
                     <div class="form-inline">
                     <div class="form-group"><a href="/profile?id={{ $data->id }}">{{ $data->name }}</a></div>
-                    @if ($data->status == 1 && $data->name != $name && $data->id != 1)
+                    @if ($data->status == 1 && $data->name != $name  && $data->id != 1 && $data->id != 2)
                         <form class="form-group" action="/banuser" method="POST">
                             {{ csrf_field() }}
                             <input type="hidden" id="username_ban" name="username_ban" value="{{ $data->name }}">
@@ -91,7 +90,7 @@ if( $sessionvalue == 'true' )
                         </form>
                         @endif
                     @else
-                        @if ($data->name != $name && $data->id != 1)
+                        @if ($data->name != $name && $data->id != 1 && $data->id != 2)
                         <form class="form-group" action="/unbanuser" method="POST">
                             {{ csrf_field() }}
                             <input type="hidden" id="username_unban" name="username_unban" value="{{ $data->name }}">
@@ -106,7 +105,7 @@ if( $sessionvalue == 'true' )
         </table>
 
         {{-- Pagination --}}
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="margin-bottom:25px;">
             {!! $users->links() !!}
         </div>
     </div>

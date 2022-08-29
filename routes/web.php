@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+function validate($data) {
+  $data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+  return $data;
+}
 
 Route::any('/', function () {
     return view('welcome');
@@ -63,7 +67,7 @@ Route::get('/join', function () {
 
 Route::any ( '/search', function () {
     session(['searched' => 'true']);
-    $q = Request::get('q');
+    $q = validate(Request::get('q'));
     
     if($q != ""){
         $users = DB::table('users')->where('name','LIKE','%'.$q.'%')->where('status', 1)->whereNotNull('email_verified_at')->paginate(10);
@@ -71,6 +75,7 @@ Route::any ( '/search', function () {
             session(['data' => '']);
         else
             session(['data' => $users]);
+        $users->setPath('/search?q='.$q);
     }
     return view ('users');
 })->middleware(['auth', 'verified'])->name('search');
@@ -80,9 +85,9 @@ Route::any ( '/itemsearch', function () {
     $q = "";
     $filter = "";
     if(isset($_GET['q']))
-        $q = $_GET['q'];
+        $q = validate($_GET['q']);
     if(isset($_GET['filter']))
-        $filter = $_GET['filter'];
+        $filter = validate($_GET['filter']);
 
     if($q != ""){
         if(isset($_GET['filter']))
@@ -113,9 +118,9 @@ Route::any ( '/avatarsearch', function () {
     $filter = "";
     $userid = Auth::user()->id;
     if(isset($_GET['q']))
-        $q = $_GET['q'];
+        $q = validate($_GET['q']);
     if(isset($_GET['filter']))
-        $filter = $_GET['filter'];
+        $filter = validate($_GET['filter']);
 
     if($q != ""){
         if(isset($_GET['filter']))
@@ -146,7 +151,7 @@ Route::any ( '/avatarsearch', function () {
 
 Route::any ( '/adminsearch', function () {
     session(['adminsearched' => 'true']);
-    $q = Request::get('q');
+    $q = validate(Request::get('q'));
     
     if($q != ""){
         $users = DB::table('users')->where('name','LIKE','%'.$q.'%')->paginate(10);
@@ -154,19 +159,24 @@ Route::any ( '/adminsearch', function () {
             session(['admindata' => '']);
         else
             session(['admindata' => $users]);
+        $users->setPath('/adminsearch?q='.$q);
     }
     return view ('adminpanel');
 })->middleware(['auth', 'verified'])->name('adminsearch');
 
 Route::post('/banuser', function () {
-    $username = $_POST["username_ban"];
-    $page = DB::table('users')->where('name', $username)->value('id');
+    $username = validate($_POST["username_ban"]);
+    $page = $id = DB::table('users')->where('name', $username)->value('id');
     $page = strval(ceil($page / 5));
     $url = "/adminpanel?page=$page";
     
-    DB::table('users')
+    if ($id != 1 && $id != 2)
+    {
+         DB::table('users')
         ->where('name', $username)
         ->update(['status' => 0, 'admin' => 0]);
+    }
+   
         
     header("Location: $url");
     exit;
@@ -174,7 +184,7 @@ Route::post('/banuser', function () {
 })->middleware(['auth', 'verified'])->name('banuser');
 
 Route::post('/unbanuser', function () {
-    $username = $_POST["username_unban"];
+    $username = validate($_POST["username_unban"]);
     $page = DB::table('users')->where('name', $username)->value('id');
     $page = strval(ceil($page / 5));
     $url = "/adminpanel?page=$page";
@@ -189,7 +199,7 @@ Route::post('/unbanuser', function () {
 })->middleware(['auth', 'verified'])->name('unbanuser');
 
 Route::post('/adminpromote', function () {
-    $username = $_POST["username_promote"];
+    $username = validate($_POST["username_promote"]);
     $page = DB::table('users')->where('name', $username)->value('id');
     $page = strval(ceil($page / 5));
     $url = "/adminpanel?page=$page";
@@ -204,23 +214,26 @@ Route::post('/adminpromote', function () {
 })->middleware(['auth', 'verified'])->name('adminpromote');
 
 Route::post('/admindemote', function () {
-    $username = $_POST["username_demote"];
-    $page = DB::table('users')->where('name', $username)->value('id');
+    $username = validate($_POST["username_demote"]);
+    $page = $id = DB::table('users')->where('name', $username)->value('id');
     $page = strval(ceil($page / 5));
     $url = "/adminpanel?page=$page";
     
-    DB::table('users')
+    if ($id != 1 && $id != 2)
+    {
+         DB::table('users')
         ->where('name', $username)
         ->update(['admin' => 0]);
-        
+    }
+    
     header("Location: $url");
     exit;
     
 })->middleware(['auth', 'verified'])->name('admindemote');
 
 Route::get('/bodycolors', function () {
-    $bodypart = $_GET["bpart"];
-    $color = $_GET["color"];
+    $bodypart = validate($_GET["bpart"]);
+    $color = validate($_GET["color"]);
     $userid = Auth::user()->id;
 
     if($bodypart != "all")
@@ -257,7 +270,9 @@ Route::get('/bodycolors', function () {
 
     curl_exec($ch);
     curl_close($ch);
-
+    
+    sleep(2);
+    
     $renderurl = "http://renderservice.rainway.xyz/render.php?";
     $items = DB::table('owneditems')->where('user', $userid)->where('wearing', 1)->paginate(9999999);
     $assetnumber = 1;
@@ -297,6 +312,8 @@ Route::any('/redraw', function () {
 
     curl_exec($ch);
     curl_close($ch);
+    
+    sleep(2);
 
     $renderurl = "http://renderservice.rainway.xyz/render.php?";
     $items = DB::table('owneditems')->where('user', $userid)->where('wearing', 1)->paginate(9999999);
@@ -308,7 +325,7 @@ Route::any('/redraw', function () {
             $renderurl = $renderurl.'asset'.$assetnumber.'='.$data->robloxid.'&';
             $assetnumber++;
         }
-    echo $renderurl;
+
     $render = file_get_contents($renderurl);
 
     DB::table('users')
@@ -322,10 +339,10 @@ Route::any('/redraw', function () {
 })->middleware(['auth', 'verified'])->name('redraw');
 
 Route::post('/changeblurb', function () {
-    $blurb = $_POST['blurb'];
+    $blurb = validate($_POST['blurb']);
     $userid = Auth::user()->id;
     $url = env('APP_URL')."/profile?id=".$userid;
-    if(strlen($blurb) <= 255)
+    if(strlen($blurb) <= 765)
     {
         DB::table('users')
         ->where('id', $userid)
@@ -339,18 +356,101 @@ Route::post('/changeblurb', function () {
 })->middleware(['auth', 'verified'])->name('changeblurb');
 
 Route::post('/createitem', function () {
-    $name = $_POST['name'];
-    $description = $_POST['desc'];
+    $name = validate($_POST['name']);
+    $description = validate($_POST['desc']);
     $price = abs($_POST['price']);
-    $assetid = $_POST['id'];
-    $type = $_POST['type'];
+    $assetid = abs(validate($_POST['id']));
+    $type = validate($_POST['type']);
     $thumbnail = file_get_contents("http://renderservice.rainway.xyz/thumbnail.php?id=$assetid");
     $creator = Auth::user()->id;
-
+    $adminstatus = Auth::user()->admin;
+    
     $query = DB::table('shop')->where('robloxid', $assetid)->value('name');
     $q = DB::table('shop')->where('name', $name)->value('name');
     
-    if(empty($query) && empty($q) && is_numeric($assetid)){
+    $supportedtypes = array("hat", "face", "shirt", "t-shirt", "pants");
+    $found = false;
+    foreach ($supportedtypes as $value) {
+        if($value == $type)
+            $found = true;
+    }
+    
+    if(empty($query) && empty($q) && is_numeric($assetid) && $found && !empty($name) && !empty($description) && !empty($assetid) && !empty($thumbnail) && $adminstatus == 1){
+        if($type != "hat")
+        {
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/$type";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["item_png"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              $check = getimagesize($_FILES["item_png"]["tmp_name"]);
+              if($check !== false && $imageFileType == "png") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["item_png"]["tmp_name"], "$target_dir/$assetid".".png");
+        }
+        else
+        {
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/textures";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["texture"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              $check = getimagesize($_FILES["texture"]["tmp_name"]);
+              if($check !== false && $imageFileType == "png") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["texture"]["tmp_name"], "$target_dir/$assetid".".png");
+                
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/meshlinks";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["mesh"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              if($imageFileType == "mesh") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["mesh"]["tmp_name"], "$target_dir/$assetid".".mesh");
+                
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["rbxm"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              if($imageFileType == "rbxm" || $imageFileType == "rbxmx") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["rbxm"]["tmp_name"], "$target_dir/$assetid".".rbxm");
+        }
+        
         DB::table('shop')->insert(
             array(
                'name'     =>   $name, 
@@ -370,20 +470,141 @@ Route::post('/createitem', function () {
     exit;
 })->middleware(['auth', 'verified'])->name('createitem');
 
+Route::post('/edititem', function () {
+    $itemid = abs(validate($_POST['itemid']));
+    $name = validate($_POST['name']);
+    $description = validate($_POST['desc']);
+    $price = abs($_POST['price']);
+    $assetid = abs(validate($_POST['id']));
+    $type = validate($_POST['type']);
+    $thumbnail = file_get_contents("http://renderservice.rainway.xyz/thumbnail.php?id=$assetid");
+    $adminstatus = Auth::user()->admin;
+    
+    $supportedtypes = array("hat", "face", "shirt", "t-shirt", "pants");
+    $found = false;
+    foreach ($supportedtypes as $value) {
+        if($value == $type)
+            $found = true;
+    }
+    
+    if(is_numeric($assetid) && is_numeric($itemid) && $found && !empty($name) && !empty($description) && !empty($assetid) && !empty($thumbnail) && $adminstatus == 1){
+        if($type != "hat")
+        {
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/$type";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["item_png"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              $check = getimagesize($_FILES["item_png"]["tmp_name"]);
+              if($check !== false && $imageFileType == "png") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["item_png"]["tmp_name"], "$target_dir/$assetid".".png");
+        }
+        else
+        {
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/textures";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["texture"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              $check = getimagesize($_FILES["texture"]["tmp_name"]);
+              if($check !== false && $imageFileType == "png") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["texture"]["tmp_name"], "$target_dir/$assetid".".png");
+                
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/meshlinks";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["mesh"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              if($imageFileType == "mesh") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["mesh"]["tmp_name"], "$target_dir/$assetid".".mesh");
+                
+            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat";
+            $uploadOk = 1;
+            $target_file = basename($_FILES["rbxm"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            
+            // Check if image file is a actual image or fake image
+            if(isset($_POST["submit"])) {
+              if($imageFileType == "rbxm" || $imageFileType == "rbxmx") {
+                $uploadOk = 1;
+              } else {
+                $uploadOk = 0;
+              }
+            }
+            
+            if ($uploadOk == 1) 
+                move_uploaded_file($_FILES["rbxm"]["tmp_name"], "$target_dir/$assetid".".rbxm");
+        }
+        
+        DB::table('shop')
+            ->where('itemid', $itemid)
+            ->update(array(
+               'name'     =>   $name, 
+               'description'   =>   $description,
+               'price'     =>   $price, 
+               'thumbnail'   =>   $thumbnail,
+               'robloxid'   =>   $assetid,
+               'onsale'   =>   1,
+               'type'   =>   $type
+            )
+        );  
+        
+        DB::table('owneditems')
+            ->where('itemid', $itemid)
+            ->update(array(
+               'itemname'     =>   $name, 
+               'robloxid'   =>   $assetid,
+               'type'   =>   $type
+            )
+        );
+    }
+
+    $url = env('APP_URL')."/item?id=".$itemid;
+    header("Location: $url");
+    exit;
+})->middleware(['auth', 'verified'])->name('edititem');
+
 Route::post('/buyitem', function () {
-    $userid = $_POST['id'];
-    $price = $_POST['price'];
-    $assetid = $_POST['robloxid'];
-    $type = $_POST['type'];
-    $id = $_POST['itemid'];
+    $userid = Auth::user()->id;
+    $id = abs(validate($_POST['itemid']));
 
     $itemowned = DB::table('owneditems')->where('user', $userid)->where('itemid', $id)->value('itemid');
     
     $rainbux = Auth::user()->rainbux;
 
+    $type = DB::table('shop')->where('itemid', $id)->value('type');
+    $assetid = DB::table('shop')->where('itemid', $id)->value('robloxid');
+    $price = DB::table('shop')->where('itemid', $id)->value('price');
     $itemname = DB::table('shop')->where('itemid', $id)->value('name');
     
-    if(empty($itemowned) && $rainbux >= $price){
+    if(empty($itemowned) && $rainbux >= $price && !empty($itemname)){
         $rainbux = $rainbux - $price;
 
         DB::table('users')
@@ -412,10 +633,9 @@ Route::any('/adminpanel', function () {
 
 Route::post('/wearitem', function () {
     $itemid = $_POST["id"];
-    $assetid = $_POST["robloxid"];
     $userid = Auth::user()->id;
     
-    $items = DB::table('owneditems')->where('user', $userid)->where('itemid', $itemid)->paginate(3);
+    $items = DB::table('owneditems')->where('user', $userid)->paginate(9999999999);
     $assetnumber = 1;
 
     if (!empty($items))

@@ -33,7 +33,6 @@ body {
   line-height: 40px; /* Vertically center the text there */
 }
 </style>
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,4 +79,3 @@ body {
         </div>
     </body>
 </html>
-

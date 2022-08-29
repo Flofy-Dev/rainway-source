@@ -77,7 +77,7 @@
                         </div>
                         {{-- Pagination --}}
                             <div class="d-flex justify-content-center">
-                                {!! $items->links() !!}
+                                {!! $items->onEachSide(2)->links() !!}
                             </div>
                         @else
                             <div class="py-12">
