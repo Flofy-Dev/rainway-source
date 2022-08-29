@@ -55,7 +55,6 @@
                     <a href="/avatar" class="list-group-item list-group-item-action">All</a>
                     <a href="/avatar?filter=hat" class="list-group-item list-group-item-action">Hats</a>
                     <a href="/avatar?filter=face" class="list-group-item list-group-item-action">Faces</a>
-                    <a href="/avatar?filter=gear" class="list-group-item list-group-item-action">Gear</a>
 
                     <div class="btn-group">
                         <a href="/avatar?filter=clothing" type="button" class="list-group-item list-group-item-action btn bg-white">Clothing</a>
