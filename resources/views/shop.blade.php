@@ -153,7 +153,6 @@
                 <a href="/shop" class="list-group-item list-group-item-action">All</a>
                 <a href="/shop?filter=hat" class="list-group-item list-group-item-action">Hats</a>
                 <a href="/shop?filter=face" class="list-group-item list-group-item-action">Faces</a>
-                <a href="/shop?filter=gear" class="list-group-item list-group-item-action">Gear</a>
 
                 <div class="btn-group">
                     <a href="/shop?filter=clothing" type="button" class="list-group-item list-group-item-action btn bg-white">Clothing</a>
