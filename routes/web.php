@@ -398,41 +398,6 @@ Route::post('/createitem', function () {
         }
         else
         {
-            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/textures";
-            $uploadOk = 1;
-            $target_file = basename($_FILES["texture"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-              $check = getimagesize($_FILES["texture"]["tmp_name"]);
-              if($check !== false && $imageFileType == "png") {
-                $uploadOk = 1;
-              } else {
-                $uploadOk = 0;
-              }
-            }
-            
-            if ($uploadOk == 1) 
-                move_uploaded_file($_FILES["texture"]["tmp_name"], "$target_dir/$assetid".".png");
-                
-            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/meshlinks";
-            $uploadOk = 1;
-            $target_file = basename($_FILES["mesh"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-              if($imageFileType == "mesh") {
-                $uploadOk = 1;
-              } else {
-                $uploadOk = 0;
-              }
-            }
-            
-            if ($uploadOk == 1) 
-                move_uploaded_file($_FILES["mesh"]["tmp_name"], "$target_dir/$assetid".".mesh");
-                
             $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat";
             $uploadOk = 1;
             $target_file = basename($_FILES["rbxm"]["name"]);
@@ -510,41 +475,6 @@ Route::post('/edititem', function () {
         }
         else
         {
-            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/textures";
-            $uploadOk = 1;
-            $target_file = basename($_FILES["texture"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-              $check = getimagesize($_FILES["texture"]["tmp_name"]);
-              if($check !== false && $imageFileType == "png") {
-                $uploadOk = 1;
-              } else {
-                $uploadOk = 0;
-              }
-            }
-            
-            if ($uploadOk == 1) 
-                move_uploaded_file($_FILES["texture"]["tmp_name"], "$target_dir/$assetid".".png");
-                
-            $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat/meshlinks";
-            $uploadOk = 1;
-            $target_file = basename($_FILES["mesh"]["name"]);
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-            
-            // Check if image file is a actual image or fake image
-            if(isset($_POST["submit"])) {
-              if($imageFileType == "mesh") {
-                $uploadOk = 1;
-              } else {
-                $uploadOk = 0;
-              }
-            }
-            
-            if ($uploadOk == 1) 
-                move_uploaded_file($_FILES["mesh"]["tmp_name"], "$target_dir/$assetid".".mesh");
-                
             $target_dir = $_SERVER['DOCUMENT_ROOT']."/../rainway.cf/API/Assets/hat";
             $uploadOk = 1;
             $target_file = basename($_FILES["rbxm"]["name"]);
