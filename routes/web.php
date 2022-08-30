@@ -167,7 +167,7 @@ Route::any ( '/adminsearch', function () {
 Route::post('/banuser', function () {
     $username = validate($_POST["username_ban"]);
     $page = $id = DB::table('users')->where('name', $username)->value('id');
-    $page = strval(ceil($page / 5));
+    $page = strval(ceil($page / 10));
     $url = "/adminpanel?page=$page";
     
     if ($id != 1 && $id != 2)
@@ -186,7 +186,7 @@ Route::post('/banuser', function () {
 Route::post('/unbanuser', function () {
     $username = validate($_POST["username_unban"]);
     $page = DB::table('users')->where('name', $username)->value('id');
-    $page = strval(ceil($page / 5));
+    $page = strval(ceil($page / 10));
     $url = "/adminpanel?page=$page";
     
     DB::table('users')
@@ -201,7 +201,7 @@ Route::post('/unbanuser', function () {
 Route::post('/adminpromote', function () {
     $username = validate($_POST["username_promote"]);
     $page = DB::table('users')->where('name', $username)->value('id');
-    $page = strval(ceil($page / 5));
+    $page = strval(ceil($page / 10));
     $url = "/adminpanel?page=$page";
     
     DB::table('users')
@@ -216,7 +216,7 @@ Route::post('/adminpromote', function () {
 Route::post('/admindemote', function () {
     $username = validate($_POST["username_demote"]);
     $page = $id = DB::table('users')->where('name', $username)->value('id');
-    $page = strval(ceil($page / 5));
+    $page = strval(ceil($page / 10));
     $url = "/adminpanel?page=$page";
     
     if ($id != 1 && $id != 2)
