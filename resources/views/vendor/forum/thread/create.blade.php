@@ -1,4 +1,5 @@
 @extends ('forum::master', ['breadcrumbs_append' => [trans('forum::threads.new_thread')]])
+@if (Auth::check())
 <?php $adminstatus = Auth::user()->admin; ?> 
 @section ('content')
     <div id="create-thread">
@@ -45,3 +46,9 @@
         @endif
     </div>
 @stop
+@else
+    <?php 
+    header("Location: /");
+    exit; 
+    ?>
+@endif
