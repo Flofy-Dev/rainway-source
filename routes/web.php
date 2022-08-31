@@ -231,6 +231,30 @@ Route::post('/admindemote', function () {
     
 })->middleware(['auth', 'verified'])->name('admindemote');
 
+Route::get('/renderavatar', function () {
+    $userid = Auth::user()->id;
+    $renderurl = "http://renderservice.rainway.xyz/render.php?";
+    $items = DB::table('owneditems')->where('user', $userid)->where('wearing', 1)->paginate(9999999);
+    $assetnumber = 1;
+
+    if (!empty($items))
+        foreach($items as $data)
+        {
+            $renderurl = $renderurl.'asset'.$assetnumber.'='.$data->robloxid.'&';
+            $assetnumber++;
+        }
+    echo $renderurl;
+    $render = file_get_contents($renderurl);
+
+    DB::table('users')
+        ->where('id', $userid)
+        ->update(['avatar' => $render]);
+
+    $url = env('APP_URL')."/avatar";
+    header("Location: $url");
+    exit;
+})->middleware(['auth', 'verified'])->name('renderavatar');
+
 Route::get('/bodycolors', function () {
     $bodypart = validate($_GET["bpart"]);
     $color = validate($_GET["color"]);
@@ -263,37 +287,8 @@ Route::get('/bodycolors', function () {
     $leftleg = DB::table('users')->where('id', $userid)->value('LeftLeg');
     $rightleg = DB::table('users')->where('id', $userid)->value('RightLeg');
     
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://renderservice.rainway.xyz/bodycolors.php?head=$head&torso=$torso&rightarm=$rightarm&leftarm=$leftarm&rightleg=$rightleg&leftleg=$leftleg");
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    curl_exec($ch);
-    curl_close($ch);
-    
-    sleep(2);
-    
-    $renderurl = "http://renderservice.rainway.xyz/render.php?";
-    $items = DB::table('owneditems')->where('user', $userid)->where('wearing', 1)->paginate(9999999);
-    $assetnumber = 1;
-
-    if (!empty($items))
-        foreach($items as $data)
-        {
-            $renderurl = $renderurl.'asset'.$assetnumber.'='.$data->robloxid.'&';
-            $assetnumber++;
-        }
-    echo $renderurl;
-    $render = file_get_contents($renderurl);
-
-    DB::table('users')
-        ->where('id', $userid)
-        ->update(['avatar' => $render]);
-
-    $url = env('APP_URL')."/avatar";
-    header("Location: $url");
+    header("Location: https://renderservice.rainway.xyz/bodycolors.php?head=$head&torso=$torso&rightarm=$rightarm&leftarm=$leftarm&rightleg=$rightleg&leftleg=$leftleg");
     exit;
-    
 })->middleware(['auth', 'verified'])->name('bodycolors');
 
 Route::any('/redraw', function () {
@@ -305,37 +300,8 @@ Route::any('/redraw', function () {
     $leftleg = DB::table('users')->where('id', $userid)->value('LeftLeg');
     $rightleg = DB::table('users')->where('id', $userid)->value('RightLeg');
     
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://renderservice.rainway.xyz/bodycolors.php?head=$head&torso=$torso&rightarm=$rightarm&leftarm=$leftarm&rightleg=$rightleg&leftleg=$leftleg");
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    curl_exec($ch);
-    curl_close($ch);
-    
-    sleep(2);
-
-    $renderurl = "http://renderservice.rainway.xyz/render.php?";
-    $items = DB::table('owneditems')->where('user', $userid)->where('wearing', 1)->paginate(9999999);
-    $assetnumber = 1;
-
-    if (!empty($items))
-        foreach($items as $data)
-        {
-            $renderurl = $renderurl.'asset'.$assetnumber.'='.$data->robloxid.'&';
-            $assetnumber++;
-        }
-
-    $render = file_get_contents($renderurl);
-
-    DB::table('users')
-        ->where('id', $userid)
-        ->update(['avatar' => $render]);
-
-    $url = env('APP_URL')."/avatar";
-    header("Location: $url");
+    header("Location: https://renderservice.rainway.xyz/bodycolors.php?head=$head&torso=$torso&rightarm=$rightarm&leftarm=$leftarm&rightleg=$rightleg&leftleg=$leftleg");
     exit;
-    
 })->middleware(['auth', 'verified'])->name('redraw');
 
 Route::post('/changeblurb', function () {
