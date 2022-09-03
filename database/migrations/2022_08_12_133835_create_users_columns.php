@@ -13,7 +13,6 @@ return new class extends Migration
      */
     public function up()
     {
-        $time = time();
         Schema::table('users', function (Blueprint $table) {
             $table->integer('rainbux')->default(0);
             $table->string('blurb')->nullable()->default("Hi! I am new to Rainway!");
@@ -24,7 +23,7 @@ return new class extends Migration
             $table->integer('RightArm')->default(24);
             $table->integer('LeftLeg')->default(29);
             $table->integer('RightLeg')->default(29);
-            $table->integer('timestamp')->default($time);
+            $table->integer('timestamp')->default(time());
         });
     }
 
