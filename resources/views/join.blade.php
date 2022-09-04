@@ -8,11 +8,11 @@
 </html>
 
 <?php 
-$name = Auth::user()->name;
-$verified = DB::table('users')->where('name', $name)->value('email_verified_at');
-$verified = urlencode($verified);
+$id = Auth::user()->id;
+$port = 53640;
+$join_Token = "your_api_hash".$id;
 
-$rainway_url = "rainway://".$verified;
+$rainway_url = "rainway://".$join_Token.";".$port;
 header("Location: $rainway_url");
 exit();
 ?>
