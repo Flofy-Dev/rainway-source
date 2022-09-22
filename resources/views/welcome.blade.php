@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="An old Roblox revival based on the 2011 client. Join to see more!">
+        <meta property="og:image" content="https://rainway.cf/embed.jpeg">
+        <meta name="description" content="An old Roblox revival based on the 2014 client. Join to see more!">
         <meta name="keywords" content="old roblox revival, roblox, roblox revival, old roblox client, physics engine, rainway">
-        <meta name="author" content="Flofy">
+        <meta name="author" content="Flofy, Flarf">
         <title>{{ config('app.name'); }} - Welcome</title>
 
         <!-- Fonts -->
