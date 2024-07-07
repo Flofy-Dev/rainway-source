@@ -1,4 +1,4 @@
-# Rainway
+# Rainway (dont use this, it's old, unmaintained and insecure nowadays)
 > The source of Rainway, an open source old Roblox Revival!
 
 [![Build Status][travis-image]][travis-url]
