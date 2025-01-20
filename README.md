@@ -1,4 +1,4 @@
-# Rainway (dont use this, it's old, unmaintained and insecure nowadays)
+# Rainway (dont use this, it's old, unmaintained and insecure nowadays, as it has an old version of Laravel and honestly, a lot of routes in web.php should have been written as controllers. I was new to web dev when I made this. Kept for archival purposes only.)
 > The source of Rainway, an open source old Roblox Revival!
 
 [![Build Status][travis-image]][travis-url]
